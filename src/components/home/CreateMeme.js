@@ -1,3 +1,4 @@
+import { useEffect } from "react"
 
 const CreateMeme = ({ 
         create, 
@@ -5,26 +6,9 @@ const CreateMeme = ({
         createBtn, 
         urlInput ,
         setUrlInput,
-        blogContent,
-        setFeedContent,
-        numID,
-        setNumID,
-        setHasBlogs
+        createBlogHandle
 }) => {
 
-    const createBlogHandle = () => {
-        setHasBlogs(true)
-        setNumID(() => numID + 1)
-        setFeedContent([
-            ...blogContent, {
-                id: numID,
-                name: 'Harold Aquino',
-                src: urlInput,
-                likes: 0
-            }
-        ])
-        setUrlInput('')
-    }
 
     return ( 
         <article className="create-container">

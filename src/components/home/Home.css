@@ -70,7 +70,7 @@
     border: solid #FCAF45 1px;
     border-radius: 5px;
     font-size: 1rem;
-    position: relative;
+    /* position: relative; */
 }
 
 .delete-modal-container {
@@ -116,6 +116,7 @@
     border: solid #FCAF45 1px;
     border-radius: 5px;
     font-size: 1rem;
+    position: relative;
 }
 
 .user-who-posted {

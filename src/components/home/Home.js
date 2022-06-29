@@ -1,15 +1,11 @@
-import './Main.css'
+import './Home.css'
 import CreateMeme from "./CreateMeme";
-import MeemFeed from './MemeFeed';
+import MemeFeed from './MemeFeed';
 import { useState } from 'react';
 
-const Main = () => {
+const Home = ({ blogContent, setBlogContent, savedFeeds, setSavedFeeds, numID, setNumID, hasBlogs, setHasBlogs, urlInput, setUrlInput, createBlogHandle, savedFeedHandle, currentID, setCurrentID }) => {
     const [create, setCreate] = useState(false)
     const [createBtn, setCreateBtn] = useState('Create')
-    const [blogContent, setFeedContent] = useState([])
-    const [urlInput, setUrlInput] = useState('')
-    const [numID, setNumID] = useState(1)
-    const [hasBlogs, setHasBlogs] = useState(false)
 
     
     // toggle create/close buttons
@@ -26,7 +22,7 @@ const Main = () => {
 
 
     return ( 
-        <main className="main">
+        <main className="home-feed">
             <CreateMeme 
                 create={ create } 
                 showInputHandle={ showInputHandle }
@@ -34,19 +30,27 @@ const Main = () => {
                 urlInput={ urlInput }
                 setUrlInput={ setUrlInput }
                 blogContent={ blogContent }
-                setFeedContent={ setFeedContent }
+                setBlogContent={ setBlogContent }
                 numID={ numID }
                 setNumID={ setNumID }
                 setHasBlogs={ setHasBlogs }
+                createBlogHandle={ createBlogHandle }
+                currentID={ currentID }
+                setCurrentID={ setCurrentID }
             />
-            <MeemFeed 
+            <MemeFeed 
                 blogContent={ blogContent }
-                setFeedContent={ setFeedContent }
+                setBlogContent={ setBlogContent }
                 hasBlogs={ hasBlogs }
                 setHasBlogs={ setHasBlogs }
+                saveFeeds={ savedFeeds }
+                setSavedFeeds={ setSavedFeeds }
+                savedFeedHandle={ savedFeedHandle }
+                currentID={ currentID }
+                setCurrentID={ setCurrentID }
             />
         </main>
      );
 }
  
-export default Main;
+export default Home;

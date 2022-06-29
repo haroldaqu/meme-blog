@@ -1,11 +1,11 @@
 import { useState } from "react"
-// import DeleteModal from "./DeleteModal"
+import DeleteModal from "./DeleteModal"
 
-const MeemFeed = ({ blogContent, setFeedContent, hasBlogs}) => {
+const MemeFeed = ({ blogContent, setBlogContent, hasBlogs, savedFeedHandle, currentID, setCurrentID}) => {
     const [deleteBtn, setDeleteBtn] = useState(false)
 
     const likeHandle = (id) => {
-        setFeedContent(
+        setBlogContent(
             blogContent.map(blog => {
                 if(blog.id === id) {
                     return {
@@ -16,19 +16,22 @@ const MeemFeed = ({ blogContent, setFeedContent, hasBlogs}) => {
             }))
     }
 
-    const deleteHandle = () => {
+    const deleteHandle = (id) => {
         setDeleteBtn(true)
+        setCurrentID(id)
     }
 
     const confirmDeleteHandle = (id) => {
-        const newBlogContent = blogContent.filter(blog => blog.id !==id)
-        setFeedContent(newBlogContent)
+        const newBlogContent = blogContent.filter(blog => blog.id !== currentID)
+        setBlogContent(newBlogContent)
         setDeleteBtn(false)
     }
 
     const backBtnHandle = () => {
         setDeleteBtn(false)
     }
+
+ 
 
     return ( 
         <div className="meme-feed">
@@ -37,7 +40,7 @@ const MeemFeed = ({ blogContent, setFeedContent, hasBlogs}) => {
                         <div className="meme-feed-container" key={blog.id}>
                             <div className="user-who-posted" >
                                 <p> { blog.name } </p>
-                                <button onClick={deleteHandle} >Delete</button>                           
+                                <button onClick={() => deleteHandle(blog.id)} >Delete</button>                           
                             </div>
                             <img src={ blog.src } alt="" className="meme-img" />
                             <div className="user-interactions">
@@ -46,23 +49,16 @@ const MeemFeed = ({ blogContent, setFeedContent, hasBlogs}) => {
                                     <p>  { blog.likes } Likes</p>
                                 </div>
                                 <button>Share</button>
-                                <button>Save</button>
+                                <button onClick={() => savedFeedHandle(blog.id)} >Save</button>
                             </div>
-                             { hasBlogs && deleteBtn && 
-                                // <DeleteModal 
-                                // deleteBtn={ deleteBtn } 
-                                // setDeleteBtn={ setDeleteBtn } 
-                                // confirmDeleteHandle={ confirmDeleteHandle }
-                                // blogID={ blog.id }
-                                // backBtnHandle={ backBtnHandle }
-                                // /> 
-                                <div className="delete-modal-container">
-                                    <p>Confirm to delete blog post</p>
-                                    <div>
-                                        <button onClick={backBtnHandle} >Back</button>
-                                        <button onClick={() => confirmDeleteHandle(blog.id)} >Confirm</button>
-                                    </div>
-                                </div>                                
+                             {deleteBtn &&  currentID === blog.id &&
+                                <DeleteModal 
+                                deleteBtn={ deleteBtn } 
+                                setDeleteBtn={ setDeleteBtn } 
+                                confirmDeleteHandle={ confirmDeleteHandle }
+                                blogID={ blog.id }
+                                backBtnHandle={ backBtnHandle }
+                                />                          
                             }
                         </div>
                     ))
@@ -72,6 +68,6 @@ const MeemFeed = ({ blogContent, setFeedContent, hasBlogs}) => {
      );
 }
  
-export default MeemFeed;
+export default MemeFeed;
 
 // https://d.newsweek.com/en/full/1176971/obesity-meme.png?w=1600&h=1200&q=88&f=e427296d9c04b9020a09aedbddd40dc6
