@@ -1,7 +1,7 @@
-const SideProfile = () => {
+const SideProfile = ({ isAuth }) => {
     return ( 
         <div className="side-profile">
-            <h1>Harold Aquino</h1>
+            { isAuth && <h1>Harold Aquino</h1>}
         </div>
      );
 }
