@@ -1,14 +1,16 @@
 import './App.css';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Navbar from './components/navbar/Navbar';
 import Header from './components/header/Header';
 import Home from './components/home/Home';
 import Saved from './components/saved/Saved';
 import TopFeeds from './components/top/TopFeeds';
-import Login from './components/login/Login';
+import { addDoc, collection } from 'firebase/firestore'
+import { db } from './components/login/firebase-config';
 
 function App() {
+  const [isAuth, setIsAuth] = useState(false)
   const [blogContent, setBlogContent] = useState([])
   const [savedFeeds, setSavedFeeds] = useState([])
   const [numID, setNumID] = useState(1)
@@ -16,7 +18,10 @@ function App() {
   const [hasBlogs, setHasBlogs] = useState(false)
   const [currentID, setCurrentID] = useState(null)
 
-  const createBlogHandle = () => {
+  const postCollectionRef = collection(db, "meme-post")
+
+  const createBlogHandle = async () => {
+        await addDoc()
         setHasBlogs(true)
         setNumID(() => numID + 1)
         setBlogContent([
@@ -63,13 +68,17 @@ function App() {
         ))
   }
 
-
   return (
     <Router>
       <div className="App">
-        <Header />
+        <Header 
+          isAuth={isAuth}
+        />
         <div className="content">
-          <Navbar />
+          <Navbar 
+            isAuth={ isAuth }
+            setIsAuth={ setIsAuth }
+          />
           <Switch >
             <Route exact path="/">
               <Home 
@@ -102,9 +111,6 @@ function App() {
                 setCurrentID={ setCurrentID }
                 unsaveHandle={ unsaveHandle }
               />
-            </Route>
-            <Route path="/login">
-                <Login />
             </Route>
           </Switch>
         </div>

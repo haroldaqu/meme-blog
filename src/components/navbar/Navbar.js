@@ -1,13 +1,17 @@
-import { Link } from 'react-router-dom'
 import './Navbar.css'
 import Links from './Links';
 import SideProfile from './SideProfile';
 
-const Navbar = () => {
+const Navbar = ({ isAuth, setIsAuth }) => {
+
+
     return ( 
         <nav className='nav-bar'>
-            <SideProfile />
-            <Links />
+            <SideProfile isAuth={ isAuth }/>
+            <Links 
+                isAuth={ isAuth } 
+                setIsAuth={ setIsAuth }
+            />
         </nav>
      );
 }
